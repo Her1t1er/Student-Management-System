@@ -1,7 +1,1 @@
-util\DBinit.class
-util\DB.class
-dao\StudentDAO.class
-dao\UserDAO.class
 StudentManagementSystem.class
-ui\Login.class
-ui\MainForm.class
