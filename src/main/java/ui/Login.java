@@ -17,7 +17,17 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     public Login() {
-        initComponents();
+
+            javax.swing.UIManager.put("ProgressBar.foreground", new java.awt.Color(33, 150, 243));
+            javax.swing.UIManager.put("ProgressBar.background", java.awt.Color.WHITE);
+            javax.swing.UIManager.put("ProgressBar.selectionForeground", java.awt.Color.WHITE);
+            javax.swing.UIManager.put("ProgressBar.selectionBackground", java.awt.Color.WHITE);
+
+            initComponents();
+
+            progressBar.setStringPainted(true);
+            progressBar.setVisible(false);
+            progressBar.setPreferredSize(new java.awt.Dimension(295, 18));
     }
 
     /**
@@ -29,21 +39,34 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         txtUsername = new javax.swing.JTextField();
         username = new javax.swing.JLabel();
         password = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        forgotPassword = new javax.swing.JLabel();
+        chkRemember = new javax.swing.JCheckBox();
         reset = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
         lblMessage = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtMessage = new javax.swing.JTextArea();
+        progressBar = new javax.swing.JProgressBar();
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane2.setViewportView(jTextArea2);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(0, 204, 204));
+        setBackground(new java.awt.Color(0, 0, 204));
         setForeground(new java.awt.Color(204, 204, 0));
 
-        txtUsername.setText("hegfs");
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
 
         username.setText("User Name");
@@ -57,10 +80,8 @@ public class Login extends javax.swing.JFrame {
         btnLogin.setBorderPainted(false);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
 
-        jCheckBox1.setText("Remember me");
-        jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
-
-        forgotPassword.setText("Forgot Password?");
+        chkRemember.setText("Remember me");
+        chkRemember.addActionListener(this::chkRememberActionPerformed);
 
         reset.setBackground(new java.awt.Color(255, 0, 0));
         reset.setFont(new java.awt.Font("Adwaita Sans", 1, 15)); // NOI18N
@@ -69,67 +90,80 @@ public class Login extends javax.swing.JFrame {
         reset.setBorderPainted(false);
         reset.addActionListener(this::resetActionPerformed);
 
-        txtPassword.setText("jPasswordField1");
+        txtPassword.setAutoscrolls(false);
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
 
         lblMessage.setForeground(new java.awt.Color(255, 51, 0));
         lblMessage.setAutoscrolls(true);
 
+        txtMessage.setColumns(20);
+        txtMessage.setRows(5);
+        txtMessage.setText("Enter correct credentials to login.");
+        jScrollPane4.setViewportView(txtMessage);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addComponent(btnLogin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(reset))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(173, 173, 173)
+                        .addComponent(lblMessage)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE))
+                .addGap(42, 42, 42))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(username)
                     .addComponent(password))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPassword)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(forgotPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(66, 66, 66))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(131, 131, 131)
-                            .addComponent(btnLogin)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(reset)))
+                        .addComponent(chkRemember, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(lblMessage)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPassword)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(66, 66, 66))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(lblMessage)
-                .addGap(18, 18, 18)
+                .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(username))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(password)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(forgotPassword)
-                .addGap(15, 15, 15)
-                .addComponent(jCheckBox1)
+                    .addComponent(txtPassword))
                 .addGap(18, 18, 18)
+                .addComponent(chkRemember)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(reset)
                     .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(71, 71, 71))
+                .addGap(33, 33, 33)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -140,30 +174,75 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        DBinit.init();
+       
 
-        String username = txtUsername.getText().trim();
-        String password = new String(txtPassword.getPassword());
+        String user = txtUsername.getText().trim();
+        String pass = new String(txtPassword.getPassword()).trim();
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (user.isEmpty() || pass.isEmpty()) {
             lblMessage.setText("Enter username and password");
+            txtMessage.setText("Enter username and password.");
             return;
         }
 
-        UserDAO dao = new UserDAO();
-        if (dao.login(username, password)) {
-            lblMessage.setText("Login successful!");
-            new MainForm().setVisible(true);
-            this.dispose();
-        } else {
-            lblMessage.setText("Invalid username or password");
-        }
+        // 1) Show progress bar first
+        progressBar.setVisible(true);
+        progressBar.setIndeterminate(false);
+        progressBar.setValue(10);
+        progressBar.setString("Checking...");
+
+        // disable buttons to prevent double clicks
+        btnLogin.setEnabled(false);
+        reset.setEnabled(false);
+
+        // 2) Let Swing repaint, THEN do DB work
+        java.awt.EventQueue.invokeLater(() -> {
+
+            try {
+                progressBar.setValue(40);
+                progressBar.setString("Connecting...");
+                DBinit.init();
+
+                progressBar.setValue(80);
+                progressBar.setString("Verifying...");
+                UserDAO dao = new UserDAO();
+                boolean ok = dao.login(user, pass);
+
+                if (ok) {
+                    progressBar.setValue(100);
+                    progressBar.setString("Done");
+                    lblMessage.setText("Login successful!");
+                    txtMessage.setText("Login successful!");
+
+                    if (chkRemember.isSelected()) {
+                        txtMessage.append("\nUser will be remembered.");
+                    }
+
+                    new MainForm().setVisible(true);
+                    dispose();
+                } else {
+                    lblMessage.setText("Invalid username or password");
+                    txtMessage.setText("Enter correct credentials to login.");
+                    progressBar.setVisible(false);
+                    progressBar.setValue(0);
+                }
+
+            } catch (Exception ex) {
+                lblMessage.setText("Login error");
+                txtMessage.setText("Error: " + ex.getMessage());
+                progressBar.setVisible(false);
+                progressBar.setValue(0);
+            } finally {
+                btnLogin.setEnabled(true);
+                reset.setEnabled(true);
+            }
+        });
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void chkRememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkRememberActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_chkRememberActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
         // TODO add your handling code here:
@@ -171,6 +250,14 @@ public class Login extends javax.swing.JFrame {
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         // TODO add your handling code here:
+        txtUsername.setText("");
+        txtPassword.setText("");
+        chkRemember.setSelected(false);
+        progressBar.setVisible(false);
+        progressBar.setValue(0);
+        //txtMessage.setText("Fields cleared.");
+
+
     }//GEN-LAST:event_resetActionPerformed
 
     /**
@@ -193,6 +280,7 @@ public class Login extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
@@ -200,11 +288,17 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
-    private javax.swing.JLabel forgotPassword;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox chkRemember;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel password;
+    private javax.swing.JProgressBar progressBar;
     private javax.swing.JButton reset;
+    private javax.swing.JTextArea txtMessage;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     private javax.swing.JLabel username;

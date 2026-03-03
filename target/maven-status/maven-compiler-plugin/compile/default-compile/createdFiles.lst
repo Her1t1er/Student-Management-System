@@ -1,2 +1,7 @@
-com\mycompany\studentmanagementsystem\StudentManagementSystem.class
-com\mycompany\studentmanagementsystem\Login.class
+util\DBinit.class
+util\DB.class
+dao\StudentDAO.class
+dao\UserDAO.class
+StudentManagementSystem.class
+ui\Login.class
+ui\MainForm.class
