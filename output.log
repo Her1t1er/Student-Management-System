@@ -1,0 +1,5 @@
+Exception in thread "main" java.lang.Error: Unresolved compilation problems: 
+	Multi-catch parameters are not allowed for source level below 1.7
+	Lambda expressions are allowed only at source level 1.8 or above
+
+	at ui.Login.main(Login.java:389)
