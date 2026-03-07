@@ -7,6 +7,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 import dao.StudentDAO;
 import util.DBinit;
+import java.util.ArrayList;
+import java.util.Comparator;
+import javax.swing.ButtonGroup;
 /**
  *
  * @author theos
@@ -28,11 +31,22 @@ public class MainForm extends javax.swing.JFrame {
         model = (DefaultTableModel) tblStudents.getModel();
         model.setRowCount(0);
         
+        ButtonGroup sortGroup = new ButtonGroup();
+        sortGroup.add(jRadioButton1);
+        sortGroup.add(jRadioButton2);
+        
         loadStudents();
                 
         tblStudents.getSelectionModel().addListSelectionListener(e -> {
         if (!e.getValueIsAdjusting()) fillInputsFromSelectedRow();
         });
+        
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+        @Override
+        public void keyReleased(java.awt.event.KeyEvent e) {
+        loadStudents();
+        }
+    });
         
         //btnAdd.addActionListener(this::btnAddActionPerformed);
         //btnUpdate.addActionListener(this::btnUpdateActionPerformed);
@@ -135,7 +149,6 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel2.setText("Name:");
 
-        txtName.setForeground(new java.awt.Color(153, 153, 153));
         txtName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -143,7 +156,6 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel3.setText("Email:");
 
-        txtEmail.setForeground(new java.awt.Color(153, 153, 153));
         txtEmail.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -151,7 +163,6 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel4.setText("Marks");
 
-        txtMarks.setForeground(new java.awt.Color(153, 153, 153));
         txtMarks.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtMarks.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtMarks.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -169,7 +180,7 @@ public class MainForm extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -184,10 +195,10 @@ public class MainForm extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbCourse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtMarks))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMarks)
+                            .addComponent(cmbCourse, 0, 169, Short.MAX_VALUE))))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,6 +305,8 @@ public class MainForm extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(102, 102, 255));
         jLabel7.setText("Search");
 
+        jTextField4.addActionListener(this::jTextField4ActionPerformed);
+
         jButton5.setBackground(new java.awt.Color(51, 102, 255));
         jButton5.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
@@ -353,6 +366,7 @@ public class MainForm extends javax.swing.JFrame {
         jRadioButton1.addActionListener(this::jRadioButton1ActionPerformed);
 
         jRadioButton2.setText("Marks");
+        jRadioButton2.addActionListener(this::jRadioButton2ActionPerformed);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -479,9 +493,43 @@ public class MainForm extends javax.swing.JFrame {
     txtName.requestFocus();
     }
     
-    private void loadStudents() {
+   private void loadStudents() {
         model.setRowCount(0);
+
+        String searchText = jTextField4.getText().trim().toLowerCase();
+
+        ArrayList<String> selectedCourses = new ArrayList<>();
+
+        if (jCheckBox1.isSelected()) selectedCourses.add("computer Engineering");
+        if (jCheckBox2.isSelected()) selectedCourses.add("Computer science");
+        if (jCheckBox3.isSelected()) selectedCourses.add("Information Systems");
+        if (jCheckBox4.isSelected()) selectedCourses.add("Information Technology");
+
+        ArrayList<Object[]> filteredRows = new ArrayList<>();
+
         for (Object[] row : studentDAO.getAllStudents()) {
+            String name = String.valueOf(row[1]).toLowerCase();
+            String course = String.valueOf(row[3]);
+
+            boolean matchesSearch = name.contains(searchText);
+
+            boolean matchesCourse = selectedCourses.isEmpty() || selectedCourses.contains(course);
+
+            if (matchesSearch && matchesCourse) {
+                filteredRows.add(row);
+            }
+        }
+
+        if (jRadioButton1.isSelected()) {
+            filteredRows.sort(Comparator.comparing(row -> String.valueOf(row[1]).toLowerCase()));
+        } else if (jRadioButton2.isSelected()) {
+                filteredRows.sort((row1, row2) -> Integer.compare(
+                Integer.parseInt(String.valueOf(row2[4])),
+                Integer.parseInt(String.valueOf(row1[4]))
+                ));        
+        }
+
+        for (Object[] row : filteredRows) {
             model.addRow(row);
         }
     }
@@ -557,26 +605,32 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        loadStudents();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
+        loadStudents();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
         // TODO add your handling code here:
+        loadStudents();
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
         // TODO add your handling code here:
+        loadStudents();
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
         // TODO add your handling code here:
+        loadStudents();
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
+        loadStudents();
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -649,6 +703,15 @@ public class MainForm extends javax.swing.JFrame {
 
         clearInputs();
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+        loadStudents();
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments
