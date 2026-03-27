@@ -31,10 +31,7 @@ public class UserDAO {
         }
     }
 
-    /**
-     * Registers a new lecturer. Returns true on success, false if username already
-     * exists.
-     */
+    
     public boolean register(String fullName, String email, String username, String password) {
         String checkSql = "SELECT 1 FROM users WHERE username=?";
         String insertSql = "INSERT INTO users(username, password, full_name, email) VALUES(?,?,?,?)";

@@ -15,12 +15,11 @@ import org.sqlite.SQLiteException;
  * @author theos
  */
 public class StudentDAO {
-    /**
-     * Inserts a new student.
-     * 
-     * @return true on success, false if the email already exists.
-     * @throws RuntimeException for unexpected DB errors.
-     */
+    private boolean isUniqueConstraint(SQLiteException e) {
+        return e.getResultCode().code == 19;
+    }
+
+   
     public boolean addStudent(String name, String email, String course, int marks) {
         String sql = "INSERT INTO students(name,email,course,marks) VALUES(?,?,?,?)";
 
@@ -36,8 +35,8 @@ public class StudentDAO {
             return true;
 
         } catch (SQLiteException e) {
-            // SQLITE_CONSTRAINT (19) covers UNIQUE violations
-            if (e.getResultCode().code == 19) {
+        
+            if (isUniqueConstraint(e)) {
                 return false; // duplicate email
             }
             throw new RuntimeException("DB error adding student", e);
@@ -46,12 +45,7 @@ public class StudentDAO {
         }
     }
 
-    /**
-     * Updates an existing student's information.
-     *
-     * @return true on success, false if the email is already used by another
-     *         student.
-     */
+    
     public boolean updateStudent(int id, String name, String email, String course, int marks) {
         String sql = "UPDATE students SET name=?, email=?, course=?, marks=? WHERE id=?";
         try (Connection conn = DB.getConnection();
@@ -64,7 +58,7 @@ public class StudentDAO {
             ps.executeUpdate();
             return true;
         } catch (SQLiteException e) {
-            if (e.getResultCode().code == 19) {
+            if (isUniqueConstraint(e)) {
                 return false; // duplicate email
             }
             throw new RuntimeException("DB error updating student", e);
