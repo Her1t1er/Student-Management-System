@@ -11,6 +11,7 @@ import util.DBinit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import javax.swing.ButtonGroup;
+import util.Session;
 
 
 /**
@@ -29,6 +30,12 @@ public class MainForm extends javax.swing.JFrame {
      * Creates new form MainForm
      */
     public MainForm() {
+        if (!util.Session.isLoggedIn()) {
+        javax.swing.JOptionPane.showMessageDialog(null, "Please login first.");
+        new Login().setVisible(true);
+        dispose();
+        return;
+        }
         DBinit.init();
         initComponents();
 
@@ -774,7 +781,13 @@ public class MainForm extends javax.swing.JFrame {
         // </editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MainForm().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+        if (util.Session.isLoggedIn()) {
+            new MainForm().setVisible(true);
+        } else {
+            new Login().setVisible(true);
+        }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -333,6 +333,7 @@ public class Login extends javax.swing.JFrame {
                         prefs.remove("password");
                         prefs.putBoolean("remember", false);
                     }
+                    util.Session.login(user);
 
                     new MainForm().setVisible(true);
                     dispose();
