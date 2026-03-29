@@ -570,6 +570,20 @@ public class MainForm extends javax.swing.JFrame {
 
     private void aboutActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_aboutActionPerformed
         // TODO add your handling code here:
+    
+        javax.swing.JOptionPane.showMessageDialog(
+        this,
+        "Student Management System\n\n"
+        + "Version: 1.0\n"
+        + "Developed by: Heritier NDAYISHIMIYE IRAKOZE, Theos KWITONDA NTAGANIRA\n"
+        + "Department: Computer Engineering\n"
+        + "University of Rwanda\n\n"
+        + "This system is designed to manage student\n"
+        + "records, marks, and course information.",
+        "About",
+        javax.swing.JOptionPane.INFORMATION_MESSAGE
+    );
+
     }// GEN-LAST:event_aboutActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtNameActionPerformed
