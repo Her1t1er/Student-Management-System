@@ -6,6 +6,7 @@ package ui;
 
 import dao.UserDAO;
 import util.DBinit;
+import java.util.prefs.Preferences;
 
 /**
  *
@@ -17,8 +18,9 @@ public class Login extends javax.swing.JFrame {
 
     
     // Creates new form Login
+    private Preferences prefs;
      
-    public Login() {
+   public Login() {
 
         javax.swing.UIManager.put("ProgressBar.foreground", new java.awt.Color(33, 150, 243));
         javax.swing.UIManager.put("ProgressBar.background", java.awt.Color.WHITE);
@@ -27,13 +29,27 @@ public class Login extends javax.swing.JFrame {
 
         initComponents();
 
+        prefs = Preferences.userRoot().node(this.getClass().getName());
+
         progressBar.setStringPainted(true);
         progressBar.setVisible(false);
         progressBar.setPreferredSize(new java.awt.Dimension(295, 18));
 
+        loadRememberedCredentials();
+
         pack();
         setLocationRelativeTo(null);
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    }
+   
+    private void loadRememberedCredentials() {
+        boolean remember = prefs.getBoolean("remember", false);
+
+        if (remember) {
+            txtUsername.setText(prefs.get("username", ""));
+            txtPassword.setText(prefs.get("password", ""));
+            chkRemember.setSelected(true);
+        }
     }
 
     /**
@@ -306,12 +322,21 @@ public class Login extends javax.swing.JFrame {
                     // lblMessage.setText("Login successful!");
                     txtMessage.setText("Login successful!");
 
+
                     if (chkRemember.isSelected()) {
+                        prefs.put("username", user);
+                        prefs.put("password", pass);
+                        prefs.putBoolean("remember", true);
                         txtMessage.append("\nUser will be remembered.");
+                    } else {
+                        prefs.remove("username");
+                        prefs.remove("password");
+                        prefs.putBoolean("remember", false);
                     }
 
                     new MainForm().setVisible(true);
                     dispose();
+                
                 } else {
                     lblMessage.setText("Invalid username or password");
                     txtMessage.setText("Enter correct credentials to login.");
@@ -348,6 +373,10 @@ public class Login extends javax.swing.JFrame {
         progressBar.setVisible(false);
         progressBar.setValue(0);
         txtMessage.setText("Enter correct credentials to login.");
+        
+        prefs.remove("username");
+        prefs.remove("password");
+        prefs.putBoolean("remember", false);
 
     }// GEN-LAST:event_resetActionPerformed
 
