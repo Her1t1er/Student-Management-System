@@ -11,6 +11,8 @@ import util.DBinit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import javax.swing.ButtonGroup;
+import util.Session;
+
 
 /**
  *
@@ -28,6 +30,12 @@ public class MainForm extends javax.swing.JFrame {
      * Creates new form MainForm
      */
     public MainForm() {
+        if (!util.Session.isLoggedIn()) {
+        javax.swing.JOptionPane.showMessageDialog(null, "Please login first.");
+        new Login().setVisible(true);
+        dispose();
+        return;
+        }
         DBinit.init();
         initComponents();
 
@@ -569,6 +577,20 @@ public class MainForm extends javax.swing.JFrame {
 
     private void aboutActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_aboutActionPerformed
         // TODO add your handling code here:
+    
+        javax.swing.JOptionPane.showMessageDialog(
+        this,
+        "Student Management System\n\n"
+        + "Version: 1.0\n"
+        + "Developed by: Heritier NDAYISHIMIYE IRAKOZE, Theos KWITONDA NTAGANIRA\n"
+        + "Department: Computer Engineering\n"
+        + "University of Rwanda\n\n"
+        + "This system is designed to manage student\n"
+        + "records, marks, and course information.",
+        "About",
+        javax.swing.JOptionPane.INFORMATION_MESSAGE
+    );
+
     }// GEN-LAST:event_aboutActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtNameActionPerformed
@@ -759,7 +781,13 @@ public class MainForm extends javax.swing.JFrame {
         // </editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MainForm().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+        if (util.Session.isLoggedIn()) {
+            new MainForm().setVisible(true);
+        } else {
+            new Login().setVisible(true);
+        }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
